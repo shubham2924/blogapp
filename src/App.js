@@ -19,7 +19,11 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import LockIcon from '@mui/icons-material/Lock';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 function App() {
+  console.log("*****************&&&&&&&&&&&&&&&")
+  console.log(auth)
+  const authorName = localStorage.getItem("authorname")
   const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
   const signUserOut = () => {
     signOut(auth).then(() => {
@@ -45,6 +49,7 @@ function App() {
           <>
           <Link to="/myposts"> <Button variant="contained" startIcon={<FilterListIcon />}>My posts</Button> </Link> &nbsp;&nbsp;
             <Link to="/createpost"> <Button variant="contained" startIcon={<AddBoxIcon />}>Create a post</Button> </Link> &nbsp;&nbsp;&nbsp;
+            <Button variant="contained" startIcon={<AccountCircleIcon />}>User: {authorName}</Button>&nbsp;
             <Button onClick={signUserOut} variant="contained" startIcon={<LogoutIcon />}>Log Out</Button>
           </>
         )}

@@ -1,9 +1,9 @@
 import {React, useState} from "react";
-import { auth, provider } from "../firebase-config";
+import { auth, provider, githubprovider } from "../firebase-config";
 import { signInWithPopup } from "firebase/auth";
 import GoogleButton from "react-google-button";
 import Typography from '@mui/material/Box';
-
+import githubbtn from '../githubbtn.PNG'
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -26,6 +26,7 @@ function Login({setIsAuth}) {
         try {
           await signInWithEmailAndPassword(auth, email, password);
           localStorage.setItem("isAuth", true);
+          localStorage.setItem("authorname",auth.currentUser.displayName)
           setIsAuth(true);
           navigate("/");
         } catch (error) {
@@ -35,6 +36,7 @@ function Login({setIsAuth}) {
     const signInWithGoogle = () => {
         signInWithPopup(auth, provider).then((result) => {
           localStorage.setItem("isAuth", true);
+          localStorage.setItem("authorname",auth.currentUser.displayName)
           setIsAuth(true);
           navigate("/");
         });
@@ -55,6 +57,28 @@ function Login({setIsAuth}) {
 
 
       };
+      const signInWithGithub = () =>{
+        signInWithPopup(auth, githubprovider).then((result) => {
+          localStorage.setItem("isAuth", true);
+          localStorage.setItem("authorname",auth.currentUser.displayName)
+          setIsAuth(true);
+          navigate("/");
+        });
+
+
+
+        const authn = getAuth();
+        const user = authn.currentUser;
+        if (user !== null) {
+          // The user object has basic properties such as display name, email, etc.
+          const displayName = user.displayName;
+          const email = user.email;
+          const photoURL = user.photoURL;
+          const emailVerified = user.emailVerified;
+          console.log(displayName);
+        }
+
+      }
   return (
     <>
     
@@ -123,6 +147,8 @@ function Login({setIsAuth}) {
       <GoogleButton
         onClick={signInWithGoogle}
       />
+      <br></br>
+      <img style={{cursor:"pointer"}} src={githubbtn} onClick={signInWithGithub}></img>
       </Typography>
     </>
   );

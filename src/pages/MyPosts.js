@@ -9,6 +9,7 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 // async function myfunc(){
 //     const postsCollectionRef = collection(db, "posts");
 //     const author= localStorage.getItem("author")
@@ -21,6 +22,7 @@ import Button from "@mui/material/Button";
 
 function MyPosts({authh}) {
     const [postLists, setPostList] = useState([]);
+    let navigate = useNavigate();
     useEffect(()=>{
         async function myfunc(){
                 const postsCollectionRef = collection(db, "posts");
@@ -38,7 +40,8 @@ function MyPosts({authh}) {
     const deletePost = async (id) => {
         const postDoc = doc(db, "posts", id);
         await deleteDoc(postDoc);
-        window.location.reload();
+        // window.location.reload();
+        navigate("/");
       };
   return (
     <>
